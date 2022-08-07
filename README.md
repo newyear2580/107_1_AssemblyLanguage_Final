@@ -59,16 +59,19 @@ asciz規劃記憶體空間，把需要印出的字串放入。用`label`指向�
 ### drawJuliaSet.s  
 - 呼叫此函式前，caller分配記憶體空間給此函式使用。執行此函式時，`frame`為pointer，初始指向caller分配的記憶體最底，位址為`0xbef694a8`。  
 ![image](https://user-images.githubusercontent.com/51331397/183278082-d61dd0f9-31fc-4bc7-a5ae-4151b364a99a.png)  
-- 將二維陣列轉為一維陣列儲存，每個2-byte大小的數字儲存位置依照公式![](http://latex.codecogs.com/svg.latex?1280y + 2x(0\lq))，
+- 將二維陣列轉為一維陣列儲存，每個2-byte大小的數字儲存位置依照公式1280y + 2x(0 <= y <= 480, 0 <= x <= 640)，所以caller分配給drawJuliaSet.s的記憶體空間為初始位置（`0xbef694a8`）加上陣列大小（`0x96500`），結束位置為`0xbefff9a8`。
 
 ### main.s  
-如下圖，name函式的記憶體位置為`0x865c`，執行name函式時返回位置為暫存器`lr`所記錄，值為`0x85a8`，暫存器`pc`所存的位置`0x8660`為執行name函式後下一個欲執行指令的位置。
-![image](https://user-images.githubusercontent.com/51331397/183242913-118d4fd5-131b-4288-a81d-a45f1fa20e71.png)  
-如下圖，id函式的記憶體位置為`0x8450`，執行id函式時返回位置為暫存器`lr`所記錄，值為`0x85b8`，暫存器`pc`所存的位置`0x8454`為執行id函式後下一個欲執行指令的位置。
-![image](https://user-images.githubusercontent.com/51331397/183242957-cb11efd0-4f48-4c9a-9bce-398ed6c6b3df.png)  
+如下圖，name函式的記憶體位置為`0x8c44`，執行name函式時返回位置為暫存器`lr`所記錄，值為`0x89e0`，暫存器`pc`所存的位置`0x8c48`為執行name函式後下一個欲執行指令的位置。  
+![image](https://user-images.githubusercontent.com/51331397/183278460-6c0e535a-09dc-4eed-b236-7f8b3a0da1d8.png)  
+如下圖，id函式的記憶體位置為`0x8864`，執行id函式時返回位置為暫存器`lr`所記錄，值為`0x89ec`，暫存器`pc`所存的位置`0x8868`為執行id函式後下一個欲執行指令的位置。  
+![image](https://user-images.githubusercontent.com/51331397/183278467-d0dca324-2579-4354-b46d-305148962da6.png)  
+如下圖，drawJuliaSet函式的記憶體位置為`0x8658`，執行drawJuliaSet函式時返回位置為暫存器`lr`所記錄，值為`0x8b00`，暫存器`pc`所存的位置`0x865c`為執行drawJuliaSet函式後下一個欲執行指令的位置。  
+![image](https://user-images.githubusercontent.com/51331397/183278474-e9b43615-331c-42e5-a597-06f0001bbb46.png)
+
 
 ## 結論
-開始寫project前，我們對於組合語言的認識還是一知半解，考試也都考爛爛的，對於各種指令在做甚麼都不是很了解，在寫此次作業的過程中，撞了不少牆，常常因為語法不熟悉而想法與寫出來的結果不一樣，卡了好幾小時，後來經摸索與詢問同學，逐漸對語法更加熟捻，才能完成作業。
+經過midterm project的洗禮，我們在開始寫final project前，對於組合語言的認識有比較深入，不過對於移位指令不是很了解，在寫此次作業的過程中，常常因為語法不熟悉而出現錯誤，卡了好幾天，對於二維陣列的資料轉一維陣列毫無頭緒，後來經摸索與查詢網路的資料，才能理解並寫出，完成此次作業。
 
 ## 未來展望
-經過這次其中project的洗禮，我們對組合語言有更進一步的認識，像是使code block Debug模式去觀察register與記憶體的內容變化，透過這個方式我們對組合語言部分只有更加直觀的認識，希望在期末project可以更加的熟悉組合語言的指令，以期以後能以組合語言實現曾寫之C程式。
+經過這次其中project的洗禮，我們對組合語言有更進一步的認識，像是使code block Debug模式去觀察register與記憶體的內容變化，透過這個方式我們對組合語言部分只有更加直觀的認識，以期以後能以組合語言實現曾寫之C程式。
